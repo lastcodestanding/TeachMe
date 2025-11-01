@@ -305,39 +305,6 @@ and technical details. Assume advanced knowledge. Go deep, not broad.
 - Check download status: `chrome://components/` → Look for "Optimization Guide On Device Model"
 - Click "Check for update" if status shows "0.0.0.0"
 
-## 📝 Creating Icon Files (Optional)
-
-The extension already includes PNG icon files in the `icons/` folder (16x16, 32x32, 48x48, 128x128). You only need this section if you want to regenerate them.
-
-### Option 1: Online Converter
-
-1. Go to <https://cloudconvert.com/svg-to-png>
-2. Upload an SVG source file
-3. Convert to sizes: 16x16, 32x32, 48x48, 128x128
-4. Save as icon16.png, icon32.png, icon48.png, icon128.png in the `icons/` folder
-
-### Option 2: Using Inkscape (Free)
-
-```bash
-# Install Inkscape first
-# Then run:
-inkscape icon.svg -w 16 -h 16 -o icon16.png
-inkscape icon.svg -w 32 -h 32 -o icon32.png
-inkscape icon.svg -w 48 -h 48 -o icon48.png
-inkscape icon.svg -w 128 -h 128 -o icon128.png
-```
-
-### Option 3: Using ImageMagick
-
-```bash
-# Install ImageMagick first
-# Then run:
-convert -background none icon.svg -resize 16x16 icon16.png
-convert -background none icon.svg -resize 32x32 icon32.png
-convert -background none icon.svg -resize 48x48 icon48.png
-convert -background none icon.svg -resize 128x128 icon128.png
-```
-
 ## 🚧 Future Enhancement Ideas
 
 - Edit existing profiles (currently must delete and recreate)
