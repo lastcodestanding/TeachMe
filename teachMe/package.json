@@ -1,0 +1,14 @@
+{
+  "name": "teachme-extension",
+  "version": "1.0.0",
+  "description": "Learning Assistant Chrome Extension",
+  "scripts": {
+    "generate-icons": "node generate-icons.js"
+  },
+  "keywords": ["chrome-extension", "learning", "ai", "education"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

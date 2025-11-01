@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeachMe - Learning Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            height: 100vh;
+            overflow: hidden;
+            color: #e5e7eb;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: #1a1a1a;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-bottom: 1px solid #2a2a2a;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-container {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-info {
+            flex: 1;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-name .highlight {
+            color: #4ade80;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: #4ade80;
+            font-weight: 500;
+            font-style: italic;
+            margin-bottom: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: #242424;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            border: 1px solid #333333;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+        }
+
+        .profile-selector {
+            position: relative;
+        }
+
+        #profileSelect {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            background: #1f1f1f;
+            color: #e5e7eb;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234ade80' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        #profileSelect:hover {
+            border-color: #4ade80;
+        }
+
+        #profileSelect:focus {
+            outline: none;
+            border-color: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        #profileSelect:disabled {
+            background-color: #1a1a1a;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .settings-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-top: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .settings-link:hover {
+            color: #4ade80;
+            gap: 8px;
+        }        .settings-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-top: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .settings-link:hover {
+            color: #4ade80;
+        }
+
+                .btn {
+            width: 100%;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #4ade80;
+            color: #0f0f0f;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+            background: #22c55e;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summary-container {
+            flex: 1;
+            display: none;
+        }
+
+        .summary-container.visible {
+            display: block;
+        }
+
+                .summary-content {
+            background: #1f1f1f;
+            border-radius: 8px;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            min-height: 200px;
+            border: 1px solid #2a2a2a;
+            color: #e5e7eb;
+        }
+
+        .summary-content p {
+            margin-bottom: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #242424;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border-left: 3px solid #4ade80;
+            margin-bottom: 15px;
+            border: 1px solid #333333;
+        }
+
+        .status-indicator.processing {
+            border-left-color: #fbbf24;
+        }
+
+        .status-indicator.success {
+            border-left-color: #4ade80;
+        }
+
+        .status-indicator.error {
+            border-left-color: #ef4444;
+            background: #2a1a1a;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #3a3a3a;
+            border-top-color: #4ade80;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.4;
+        }
+
+        .empty-state-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .advanced-toggle {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .advanced-toggle:hover {
+            background: #edf2f7;
+        }
+
+        .advanced-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .advanced-toggle label {
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .info-tooltip {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #cbd5e0;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 0.7rem;
+            cursor: help;
+        }
+
+        .streaming-text {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .page-info {
+            background: #242424;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            border-left: 3px solid #4ade80;
+            margin-bottom: 15px;
+            word-break: break-word;
+            border: 1px solid #333333;
+        }
+
+        .page-info strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #e5e7eb;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-secondary {
+            background: #242424;
+            color: #4ade80;
+            border: 1px solid #4ade80;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #2a2a2a;
+        }        /* Scrollbar styling */
+        .content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 3px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+
+        .summary-header {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .summary-header h3 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #4ade80;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .summary-content {
+            line-height: 1.6;
+            color: #e5e7eb;
+        }
+
+        .streaming-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 16px;
+            background: #4ade80;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+    </style>
+</head>
+<body>
+    <div class="side-panel">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+                        <!-- Monitor screen -->
+                        <rect x="40" y="45" width="160" height="120" rx="8" stroke="white" stroke-width="6" fill="none"/>
+                        
+                        <!-- Book pages -->
+                        <path d="M 90 70 Q 120 75 120 75 Q 120 75 150 70" stroke="white" stroke-width="4" fill="none"/>
+                        <path d="M 90 85 Q 120 90 120 90 Q 120 90 150 85" stroke="white" stroke-width="4" fill="none"/>
+                        <path d="M 90 100 Q 120 105 120 105 Q 120 105 150 100" stroke="white" stroke-width="4" fill="none"/>
+                        <path d="M 90 115 Q 120 120 120 120 Q 120 120 150 115" stroke="white" stroke-width="4" fill="none"/>
+                        <path d="M 90 130 Q 120 135 120 135 Q 120 135 150 130" stroke="white" stroke-width="4" fill="none"/>
+                        
+                        <!-- Book spine -->
+                        <line x1="120" y1="70" x2="120" y2="135" stroke="white" stroke-width="3"/>
+                        
+                        <!-- Book cover outline -->
+                        <path d="M 75 65 Q 75 55 85 55 L 120 55 M 120 55 L 155 55 Q 165 55 165 65 L 165 140 Q 165 145 160 145 L 125 145 M 125 145 L 80 145 Q 75 145 75 140 Z" stroke="white" stroke-width="5" fill="none"/>
+                        
+                        <!-- Monitor buttons -->
+                        <circle cx="58" cy="152" r="5" fill="white"/>
+                        <circle cx="78" cy="152" r="5" fill="white"/>
+                        
+                        <!-- Monitor stand -->
+                        <rect x="95" y="165" width="50" height="8" rx="2" fill="white"/>
+                        <rect x="110" y="173" width="20" height="15" rx="2" fill="white"/>
+                        <rect x="90" y="188" width="60" height="6" rx="3" fill="white"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-name">TEACH<span class="highlight">ME</span></div>
+                    <div class="tagline">Learn the Way <span style="font-style: italic;">You</span> Think</div>
+                    <div class="subtitle">"Stop Adapting to Content. Start Adapting Content to You."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <div class="section-title">
+                    <span>Select Learning Profile</span>
+                </div>                <div class="profile-selector">
+                    <select id="profileSelect">
+                        <option value="">Loading profiles...</option>
+                    </select>
+                </div>
+
+                <a href="#" id="openSettings" class="settings-link">
+                    Manage Profiles
+                </a>
+            </div>
+
+            <div class="card">
+                            <div class="card">
+                <button class="btn btn-primary" id="generateBtn" disabled>
+                    <span>Teach Me</span>
+                </button>
+            </div>
+            </div>
+
+            <div id="pageInfo" class="page-info" style="display: none;">
+                <strong>Current Page:</strong>
+                <span id="pageTitle">-</span>
+            </div>
+
+            <div id="statusIndicator" style="display: none;"></div>
+
+                <div id="summaryContainer" style="display: none;">
+            <div id="contextCard" class="summary-card" style="display: none;">
+                <div class="summary-header">
+                    <h3>Generated Context</h3>
+                    <span class="summary-label">Smart instructions for analysis</span>
+                </div>
+                <div id="contextContent" class="summary-content" style="font-style: italic; color: #666; background: #f8f9ff; padding: 12px; border-radius: 6px;"></div>
+            </div>
+            
+            <div id="initialSummaryCard" class="summary-card" style="display: none;">
+                <div class="summary-header">
+                    <h3>Initial Analysis</h3>
+                    <span class="summary-label">Key points extracted</span>
+                </div>
+                <div id="initialSummaryContent" class="summary-content"></div>
+            </div>
+            
+            <div id="finalSummaryCard" class="summary-card" style="display: none;">
+                <div class="summary-header">
+                    <h3>Your Personalized Lesson</h3>
+                    <span class="summary-label">Adapted to your learning style</span>
+                </div>
+                <div id="finalSummaryContent" class="summary-content"></div>
+            </div>
+            
+            <div class="button-group">
+                <button id="copyBtn" class="btn btn-secondary">
+                    Copy Lesson
+                </button>
+                <button id="newSummaryBtn" class="btn btn-secondary">
+                    New Lesson
+                </button>
+            </div>
+        </div>                                    <div id="emptyState" class="empty-state">
+                <div class="empty-state-icon">◆</div>
+                <div class="empty-state-text">
+                    Select a learning profile and click "Teach Me" to get started
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>

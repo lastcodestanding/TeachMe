@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeachMe Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            min-height: 100vh;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .header h1 .highlight {
+            color: #4ade80;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #9ca3af;
+            margin-top: 12px;
+        }
+
+        .settings-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 20px;
+            background: #4ade80;
+            border-radius: 2px;
+        }
+
+        .profile-form {
+            background: #242424;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #333333;
+            transition: all 0.3s ease;
+        }
+
+        .profile-form:hover {
+            border-color: #4ade80;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #e5e7eb;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: #1f1f1f;
+            color: #e5e7eb;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-hint {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4ade80;
+            color: #0f0f0f;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+            background: #22c55e;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .profiles-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .profile-item {
+            background: #242424;
+            border: 1px solid #333333;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .profile-item:hover {
+            border-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+            color: #9ca3af;
+        }
+
+        .btn-icon:hover {
+            background: #1f1f1f;
+            color: #e5e7eb;
+        }
+
+        .btn-delete:hover {
+            background: #2a1a1a;
+            color: #ef4444;
+        }
+
+        .profile-prompt {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.4;
+        }
+
+        .empty-state-text {
+            font-size: 1rem;
+            color: #9ca3af;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #242424;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            animation: slideInRight 0.4s ease;
+            z-index: 1000;
+            color: #e5e7eb;
+            border: 1px solid #333333;
+        }
+
+        .toast.success {
+            border-left: 4px solid #4ade80;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .advanced-options {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #242424;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #333333;
+        }
+
+        .checkbox-group:hover {
+            background: #2a2a2a;
+            border-color: #4ade80;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4ade80;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+            color: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+                    <!-- Monitor screen -->
+                    <rect x="40" y="45" width="160" height="120" rx="8" stroke="white" stroke-width="6" fill="none"/>
+                    
+                    <!-- Book pages -->
+                    <path d="M 90 70 Q 120 75 120 75 Q 120 75 150 70" stroke="white" stroke-width="4" fill="none"/>
+                    <path d="M 90 85 Q 120 90 120 90 Q 120 90 150 85" stroke="white" stroke-width="4" fill="none"/>
+                    <path d="M 90 100 Q 120 105 120 105 Q 120 105 150 100" stroke="white" stroke-width="4" fill="none"/>
+                    <path d="M 90 115 Q 120 120 120 120 Q 120 120 150 115" stroke="white" stroke-width="4" fill="none"/>
+                    <path d="M 90 130 Q 120 135 120 135 Q 120 135 150 130" stroke="white" stroke-width="4" fill="none"/>
+                    
+                    <!-- Book spine -->
+                    <line x1="120" y1="70" x2="120" y2="135" stroke="white" stroke-width="3"/>
+                    
+                    <!-- Book cover outline -->
+                    <path d="M 75 65 Q 75 55 85 55 L 120 55 M 120 55 L 155 55 Q 165 55 165 65 L 165 140 Q 165 145 160 145 L 125 145 M 125 145 L 80 145 Q 75 145 75 140 Z" stroke="white" stroke-width="5" fill="none"/>
+                    
+                    <!-- Monitor buttons -->
+                    <circle cx="58" cy="152" r="5" fill="white"/>
+                    <circle cx="78" cy="152" r="5" fill="white"/>
+                    
+                    <!-- Monitor stand -->
+                    <rect x="95" y="165" width="50" height="8" rx="2" fill="white"/>
+                    <rect x="110" y="173" width="20" height="15" rx="2" fill="white"/>
+                    <rect x="90" y="188" width="60" height="6" rx="3" fill="white"/>
+                </svg>
+            </div>
+            <h1>TEACH<span class="highlight">ME</span></h1>
+            <p>Customize your learning profiles</p>
+        </div>
+
+        <div class="settings-card">
+            <h2 class="section-title">Add New Profile</h2>
+            
+            <div class="profile-form">
+                <div class="form-group">
+                    <label for="profileName">Profile Name</label>
+                    <input 
+                        type="text" 
+                        id="profileName" 
+                        placeholder="e.g., Teach Me Like I'm 5"
+                        maxlength="50"
+                    >
+                    <div class="form-hint">Give your profile a memorable name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profilePrompt">Learning Style / Instruction</label>
+                    <textarea 
+                        id="profilePrompt" 
+                        placeholder="e.g., Explain this content using simple language and analogies suitable for a 5-year-old child. Use fun examples and break down complex concepts."
+                    ></textarea>
+                    <div class="form-hint">Describe how you want the content to be explained</div>
+                </div>
+
+                <button class="btn btn-primary" id="addProfileBtn">
+                    Add Profile
+                </button>
+            </div>
+
+            <h2 class="section-title">Your Profiles</h2>
+            
+            <div id="profilesList" class="profiles-list"></div>
+        </div>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+</html>
